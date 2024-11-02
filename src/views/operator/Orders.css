@@ -1,0 +1,32 @@
+.pos-sales-container {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    height: calc(100vh - 60px);
+  }
+  
+  .pos-sales-row {
+    height: 100%;
+  }
+  
+  .pos-sales-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .pos-sales-divider {
+    margin: 5px 0px;
+  }
+  
+  .pos-sales-footer {
+    margin-top: auto;
+  }
+  
+  .pos-sales-back-button {
+    margin-bottom: 20px;
+  }
+  
+  .pos-sales-full-width-button {
+    width: 100%;
+  }

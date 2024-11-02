@@ -1,0 +1,58 @@
+/* Estilo del header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5222d;
+    padding: 0 20px;
+    height: 40px;
+}
+
+/* Estilo del logo */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logoCircle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff; /* Color del logo (círculo blanco) */
+}
+
+/* Menú central */
+.menu {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: transparent;
+    height: 40px;
+    color: #fff;
+}
+
+/* Estilo de los links */
+.link {
+    color: #fff;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 10px;
+    transition: border-bottom 0.2s;
+}
+
+/* Efecto hover y seleccionados */
+.link:hover,
+.link-selected {
+    border-bottom: 2px solid #fff;
+    color: #fff;
+}
+
+/* Estilo del perfil */
+.profile {
+    display: flex;
+    align-items: center;
+    
+}
