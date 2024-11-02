@@ -33,8 +33,8 @@ const HeaderSales = ({children}) => {
                 {/* Menú central */}
                 <div className="menu">
                     <Link to="sales" className={`link ${location.pathname === '/operator/sales' ? 'link-selected' : ''}`}>CAJA</Link>
-                    <Link to="movimientos" className={`link ${location.pathname === '/operator/movimientos' ? 'link-selected' : ''}`}>MOVIMIENTOS</Link>
-                    <Link to="pedidos" className={`link ${location.pathname === '/operator/pedidos' ? 'link-selected' : ''}`}>PEDIDOS</Link>
+                    <Link to="movements" className={`link ${location.pathname === '/operator/movements' ? 'link-selected' : ''}`}>MOVIMIENTOS</Link>
+                    <Link to="orders" className={`link ${location.pathname === '/operator/orders' ? 'link-selected' : ''}`}>PEDIDOS</Link>
                 </div>
 
                 {/* Imagen de perfil con Dropdown a la derecha */}

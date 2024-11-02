@@ -20,6 +20,9 @@ import Categories from '../views/Categories/Categories';
 import Promos from '../views/Promos/Promos';
 import ViewFabric from '../components/Fabrics/ViewFabric';
 import EditFabric from '../views/Fabrics/EditFabric';
+import Sales from '../views/operator/Sales';
+import Movements from '../views/operator/Movements';
+import Orders from '../views/operator/Orders';
 
 const RoutesApp = () => {
     return (
@@ -89,9 +92,9 @@ const OperatorRoutes = () => {
             <>
                 <HeaderSales>
                     <Routes>
-                        <Route index path='/sales' element={<PosSales />} />
-                        <Route index path='/movimientos' element={<PosSales />} />
-                        <Route index path='/pedidos' element={<PosSales />} />
+                        <Route index path='/sales' element={<Sales />} />
+                        <Route index path='/movements' element={<Movements />} />
+                        <Route index path='/orders' element={<Orders />} />
                         <Route index path='/profile' element={<ConfigurationProfiles />} />
                     </Routes>
 
