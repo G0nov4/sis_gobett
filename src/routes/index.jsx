@@ -103,7 +103,7 @@ const OperatorRoutes = () => {
             </>
         );
     }
-    return <Navigate to='/403' replace />;
+    return <Navigate to='/login' replace />;
 };
 
 // Componente para rutas de almacén

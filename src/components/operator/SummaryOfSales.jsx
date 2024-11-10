@@ -58,7 +58,7 @@ function SummaryOfSales({ subtotal = 0, setDiscount }) {
             <hr className='order-divider' />
             <Flex justify='space-between'>
                 <span><b>Subtotal: </b></span>
-                <span> Bs. {formatCurrency(subtotal)}</span>
+                <span>Bs. {formatCurrency(subtotal)}</span>
             </Flex>
 
             {descuento > 0 && (

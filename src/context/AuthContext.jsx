@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
                 break;
             case 'operador de venta':
                 message.success('¡Bienvenido Departamento de Ventas!');
-                navigate('/operator', { replace: true });
+                navigate('/operator/sales', { replace: true });
                 break;
             case 'operador de almacen':
                 message.success('¡Bienvenido Departamento de Almacén!');

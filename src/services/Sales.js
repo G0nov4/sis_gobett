@@ -7,7 +7,7 @@ const token = localStorage.getItem('sisgbt-jwtoken');
 // Obtener todas las ventas
 const fetchSales = async (_, orderBy = 'id', orderType = 'asc', filters = {}) => {
     try {
-        const response = await axios.get(`${apiURL}sales`, {
+        const response = await axios.get(`${apiURL}sales?populate[0]=client&populate[1]=detail.fabric&populate[2]=detail.color&populate[3]=promo&populate[4]=payments`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },

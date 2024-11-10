@@ -1,0 +1,81 @@
+.order-list-container {
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.order-item {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.order-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.order-item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order-item-quantity {
+    font-weight: bold;
+    min-width: 30px;
+}
+
+.order-item-description {
+    flex: 1;
+}
+
+.order-item-price {
+    font-weight: bold;
+}
+
+.order-item-notes {
+    margin-top: 4px;
+    font-size: 0.9em;
+    color: #666;
+    padding-left: 38px;
+}
+
+.order-details {
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 4px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.total-final {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.payment-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.change-amount {
+    color: #52c41a;
+    font-weight: bold;
+}
+
+.insufficient-amount {
+    color: #ff4d4f;
+    font-weight: bold;
+}

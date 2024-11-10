@@ -66,7 +66,7 @@ function DetailOrderList({ orderList, setOrderList }) {
             dataIndex: 'totalPrice',
             key: 'totalPrice',
 
-            render: (text) => <span>{text} Bs.</span>,
+            render: (text) => <span>{Number(text).toFixed(2)} Bs.</span>,
         },
         {
             title: 'Acciones',
