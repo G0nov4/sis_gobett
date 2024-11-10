@@ -1,22 +1,21 @@
 import { Badge, Button, Popconfirm, Progress, Space, Table, Tooltip, Row, Col, Flex, Dropdown, Menu, Spin, Skeleton, Divider, Form } from 'antd'
 import React, { useState } from 'react'
 import { useQueryClient } from 'react-query';
-import { BarChartOutlined, DownOutlined, PlusOutlined, SortAscendingOutlined, UpOutlined, DeleteOutlined, EditOutlined, EyeFilled, PercentageOutlined, QuestionCircleOutlined, ShopOutlined, SyncOutlined, TeamOutlined, RotateLeftOutlined } from '@ant-design/icons';
+import { BarChartOutlined, DownOutlined, PlusOutlined, SortAscendingOutlined, UpOutlined, DeleteOutlined, EditOutlined, EyeFilled, PercentageOutlined, QuestionCircleOutlined, ShopOutlined, SyncOutlined, TeamOutlined, RotateLeftOutlined, PrinterOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFabrics, useDeleteFabric } from '../../services/Fabrics';
 import { MdColorize } from 'react-icons/md';
 import { message } from 'antd';
-
+import { generateFabricReport } from '../../utils/admin/ReportFabric';
 
 const TableComponentFabrics = () => {
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const deleteFabricMutation = useDeleteFabric();
-
+    const [showReport, setShowReport] = useState(false);
 
     // Obteniendo todos los sucursales
     const { data: fabrics, error: errorFabrics, isLoading: isLoadingFabrics } = useFabrics()
-    console.log(fabrics)
     
     const columns = [
         {
@@ -199,67 +198,87 @@ const TableComponentFabrics = () => {
                                 />
                             </Popconfirm>
                         </Tooltip>
+                        <Tooltip title="Imprimir Reporte de tela" color='#000' key='Editar'>
+                            <Button
+                                icon={<PrinterOutlined />}
+                                size='small'
+                                style={{
+                                    color: '#000', borderColor: '#000'
+                                }}
+                                onClick={handleEditClient}
+                            />
+                        </Tooltip>
                     </Space>
                 )
             },
         },
     ]
 
-
     return (
+        <>
+            {!showReport ? (
+                <Col span={24}>
+                    <Flex align='center' justify='space-between' style={{ margin: '10px 0px' }}>
+                        <h3 style={{ margin: 0, marginTop: 15 }}> </h3>
+                        {isLoadingFabrics ?
+                            <Space>
+                                <Skeleton.Button active={true} size='small' />
+                                <Skeleton.Button active={true} size='small' />
+                                <Skeleton.Button active={true} size='small' />
+                            </Space>
+                            :
+                            <Space>
+                                <Button
+                                    onClick={() => setShowReport(true)}
+                                    icon={<BarChartOutlined />}
+                                    type='default'
+                                    size='small'
+                                >
+                                    Generar Reporte
+                                </Button>
+                                <Button
+                                    onClick={() => navigate("/admin/fabric/create")}
+                                    icon={<PlusOutlined />}
+                                    type='default'
+                                    size='middle'
+                                >
+                                    Crear producto tela
+                                </Button>
+                            </Space>
+                        }
+                    </Flex>
 
-        <Col span={24}>
-
-            <Flex align='center' justify='space-between' style={{ margin: '10px 0px' }}>
-                <h3 style={{ margin: 0, marginTop: 15 }}> </h3>
-                {isLoadingFabrics ?
-                    <Space>
-                        <Skeleton.Button active={true} size='small' />
-                        <Skeleton.Button active={true} size='small' />
-                        <Skeleton.Button active={true} size='small' />
-                    </Space>
-                    :
-                    <Space>
-                        <Button
-                            onClick={() => { }}
-                            icon={<BarChartOutlined />}
-                            type='default'
+                    <Spin spinning={isLoadingFabrics} tip='Cargando datos de las sucursales'>
+                        <Table
+                            scroll={{
+                                x: 900,
+                            }}
+                            bordered
+                            virtual
+                            columns={columns}
+                            dataSource={isLoadingFabrics && !errorFabrics ? [] : fabrics.data.map(item => ({ ...item, key: item.id }))}
                             size='small'
-                        >
-                            Generar Reporte
-                        </Button>
-                        <Button
-                            onClick={() => navigate("/admin/fabric/create")}
-                            icon={<PlusOutlined />}
-                            type='default'
-                            size='middle'
-                        >
-                            Crear producto tela
-                        </Button>
-                    </Space>
-                }
-            </Flex>
-
-            {/* MODAL PARA LAS SUCURSALES */}
-
-            <Spin spinning={isLoadingFabrics} tip='Cargando datos de las sucursales'>
-                <Table
-                    scroll={{
-                        x: 900,
-                    }}
-                    bordered
-                    virtual
-                    columns={columns}
-                    dataSource={isLoadingFabrics && !errorFabrics ? [] : fabrics.data.map(item => ({ ...item, key: item.id }))}
-                    size='small'
-                    pagination={{
-                        pageSize: 6,
-                    }} />
-            </Spin>
-
-
-
-        </Col>
+                            pagination={{
+                                pageSize: 6,
+                            }} 
+                        />
+                    </Spin>
+                </Col>
+            ) : (
+                <div style={{ height: '100vh' }}>
+                    <Row style={{ padding: '10px', backgroundColor: '#fff' }}>
+                        <Space>
+                            <Button onClick={() => setShowReport(false)} type='primary' danger>
+                                Volver
+                            </Button>
+                        </Space>
+                    </Row>
+                    <div style={{ height: 'calc(100vh - 60px)' }}>
+                        {fabrics && generateFabricReport(fabrics)}
+                    </div>
+                </div>
+            )}
+        </>
     )
 }
 

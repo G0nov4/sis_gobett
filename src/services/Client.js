@@ -7,18 +7,19 @@ const token = localStorage.getItem('sisgbt-jwtoken')
 
 const fetchClients = async (orderBy = 'id', orderType = 'asc', filters = {}) => {
     try {
-        const response = await axios.get(`${apiURL}clients`, {
+        const response = await axios.get(`${apiURL}clients?populate=*`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
             params: {
                 sort: `${orderBy}:${orderType}`,
+                'pagination[pageSize]': 10000,
                 ...filters
             }
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error al obtener los clientes:', error);
         throw error;
     }
 };

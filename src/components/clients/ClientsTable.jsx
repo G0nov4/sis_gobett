@@ -28,7 +28,6 @@ const ClientsTable = ({ clients, isLoading }) => {
             ),
             key: '  name',
             align: 'left',
-            width: '20%',
             render: (text, record) => (
                 <span>
                     {record.attributes.name} {record.attributes.last_name} {/* Aquí puedes unir dos datos para una sola columna */}
@@ -44,7 +43,6 @@ const ClientsTable = ({ clients, isLoading }) => {
             ),
             key: 'phone_1',
             align: 'center',
-            width: '15%',
             render: (record) => (
                 <Col style={{ fontSize: 12 }}>
                     {record.attributes.phone_1 ? `(+591) ${record.attributes.phone_1}` : null}
@@ -63,7 +61,6 @@ const ClientsTable = ({ clients, isLoading }) => {
             ),
             key: 'phone_1',
             align: 'center',
-            width: '16%',
             render: (record) => {
                 let tagColor;
                 let tagText;
@@ -114,7 +111,6 @@ const ClientsTable = ({ clients, isLoading }) => {
                 </Space>
             ),
             key: 'accion',
-            width: '1%',
             align: 'center',
             render: (_, record) => {
                 const handleViewClient = () => {
@@ -191,6 +187,7 @@ const ClientsTable = ({ clients, isLoading }) => {
                 dataSource={isLoading ? [] : clients.data.map(item => ({ ...item, key: item.id }))}
                 pagination={{ pageSize: 10 }}
                 size="small"
+                scroll={{x: 400, y: 40 * 10 }}
             />
             <ClientDetailsDrawer client={viewClient} onClose={() => setViewModalOpen(false)} visible={viewModalOpen} />
             <EditClientModal visible={editModalOpen} onCloseModal={() => setEditModalOpen(false)} dataToUpdate={dataToUpdate} />
