@@ -84,18 +84,6 @@ export const menuData = [
                 icon: <BsJournalCheck />,
                 path: '/admin/sales'
             },
-            {
-                key: 10,
-                title: 'Cotizaciones',
-                icon: <BsJournalText />,
-                path: '/admin/cotizaciones'
-            },
-            {
-                key: 111,
-                title: 'Reservas',
-                icon: <BsCalendar2Check />,
-                path: '/admin/booking'
-            },
         ],
     },
     {
@@ -103,18 +91,6 @@ export const menuData = [
         title: 'Ventas por producto',
         icon: <BsBarChartFill />,
         path: '/admin/sales/products'
-    },
-    {
-        key: 13,
-        title: 'Cajas',
-        icon: <BsPcDisplayHorizontal />,
-        path: '/admin/sales/boxes'
-    },
-    {
-        key: 14,
-        title: 'Reportes',
-        icon: <BsGraphUp />,
-        path: '/admin/reports'
     },
     {
         key: 15,

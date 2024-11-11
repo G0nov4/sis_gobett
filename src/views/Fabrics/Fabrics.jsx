@@ -8,9 +8,10 @@ const Fabrics = () => {
 
     <Row >
      
-      {/* Columna de estadisticas */}
       <Col span={24}>
-        <Statistics />
+        <Row justify="start">
+          <h1 style={{ margin: '20px 0' }}>Gestion de telas</h1>
+        </Row>
       </Col>
 
       <TableComponentFabrics />

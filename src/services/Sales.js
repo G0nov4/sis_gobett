@@ -7,7 +7,7 @@ const token = localStorage.getItem('sisgbt-jwtoken');
 // Obtener todas las ventas
 const fetchSales = async (_, orderBy = 'id', orderType = 'asc', filters = {}) => {
     try {
-        const response = await axios.get(`${apiURL}sales?populate[0]=client&populate[1]=detail.fabric&populate[2]=detail.color&populate[3]=promo&populate[4]=payments`, {
+        const response = await axios.get(`${apiURL}sales?populate[0]=client&populate[1]=detail.fabric&populate[2]=detail.color&populate[3]=promo&populate[4]=payments&populate[5]=payments`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -104,6 +104,35 @@ const deleteSale = async (id) => {
         console.error('Error al eliminar venta:', error);
         throw error;
     }
+};
+
+// Actualizar el estado de una venta
+export const updateSaleStatus = async (saleId, status) => {
+    try {
+        const response = await fetch(`${apiURL}sales/${saleId}/status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                    status: status
+            })
+        });
+        
+        if (!response.ok) throw new Error('Error al actualizar la venta');
+        
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+// Cancelar una venta
+export const cancelSale = async (saleId) => {
+    // Implementar lógica de cancelación según tus necesidades
+    // Podría ser similar a updateSaleStatus pero con un estado "cancelado"
+    // o podría ser una eliminación lógica
 };
 
 // Hooks personalizados

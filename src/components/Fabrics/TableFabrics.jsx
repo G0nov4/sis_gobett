@@ -13,6 +13,7 @@ const TableComponentFabrics = () => {
     const navigate = useNavigate()
     const deleteFabricMutation = useDeleteFabric();
     const [showReport, setShowReport] = useState(false);
+    const [selectedFabric, setSelectedFabric] = useState(null);
 
     // Obteniendo todos los sucursales
     const { data: fabrics, error: errorFabrics, isLoading: isLoadingFabrics } = useFabrics()
@@ -134,7 +135,6 @@ const TableComponentFabrics = () => {
             fixed: 'right',
             render: (_, record) => {
                 const handleEditClient = () => {
-                    
                     navigate(`/admin/fabric/edit/${record.id}`, { 
                         state: record 
                     });
@@ -150,7 +150,12 @@ const TableComponentFabrics = () => {
                         message.error('Error al eliminar la tela');
                     }
                 }
-
+                const handlePrintFabric = () => {
+                    setSelectedFabric({
+                        data: [record]
+                    });
+                    setShowReport(true);
+                }
                 return (
                     <Space>
                         <Tooltip title="Ver" color='#4F646F' key='Ver'>
@@ -198,14 +203,14 @@ const TableComponentFabrics = () => {
                                 />
                             </Popconfirm>
                         </Tooltip>
-                        <Tooltip title="Imprimir Reporte de tela" color='#000' key='Editar'>
+                        <Tooltip title="Imprimir Reporte de tela" color='#000' key='Imprimir'>
                             <Button
                                 icon={<PrinterOutlined />}
                                 size='small'
                                 style={{
                                     color: '#000', borderColor: '#000'
                                 }}
-                                onClick={handleEditClient}
+                                onClick={handlePrintFabric}
                             />
                         </Tooltip>
                     </Space>
@@ -229,7 +234,10 @@ const TableComponentFabrics = () => {
                             :
                             <Space>
                                 <Button
-                                    onClick={() => setShowReport(true)}
+                                    onClick={() => {
+                                        setSelectedFabric(fabrics);
+                                        setShowReport(true);
+                                    }}
                                     icon={<BarChartOutlined />}
                                     type='default'
                                     size='small'
@@ -265,7 +273,7 @@ const TableComponentFabrics = () => {
                     </Spin>
                 </Col>
             ) : (
-                <div style={{ height: '100vh' }}>
+                <Col span={24}>
                     <Row style={{ padding: '10px', backgroundColor: '#fff' }}>
                         <Space>
                             <Button onClick={() => setShowReport(false)} type='primary' danger>
@@ -274,9 +282,9 @@ const TableComponentFabrics = () => {
                         </Space>
                     </Row>
                     <div style={{ height: 'calc(100vh - 60px)' }}>
-                        {fabrics && generateFabricReport(fabrics)}
+                        {selectedFabric && generateFabricReport(selectedFabric)}
                     </div>
-                </div>
+                </Col>
             )}
         </>
     )

@@ -23,6 +23,8 @@ import EditFabric from '../views/Fabrics/EditFabric';
 import Sales from '../views/operator/Sales';
 import Movements from '../views/operator/Movements';
 import Orders from '../views/operator/Orders';
+import TransactionSales from '../views/Sales/TransactionSales';
+import TransactionOrders from '../views/Orders/TransactionOrders';
 
 const RoutesApp = () => {
     return (
@@ -76,6 +78,8 @@ const AdminRoutes = () => {
                         <Route path='/categories' element={<Categories />} />
                         <Route path='/promos' element={<Promos />} />
                         <Route path='fabric/edit/:id' element={<EditFabric />} />
+                        <Route path='/sales' element={<TransactionSales />} />
+                        <Route path='/orders' element={<TransactionOrders />} />
                     </Routes>
                 </CustomHeader>
             </>

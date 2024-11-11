@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     rollsGrid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        gap: 10
     },
     rollBox: {
         border: '1pt solid #666',
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     },
     legend: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         marginBottom: 10
     },
     legendItem: {
@@ -127,14 +126,24 @@ const styles = StyleSheet.create({
 
 const FabricReport = ({ fabrics }) => {
     const groupRollsByColor = (rolls) => {
-        return rolls.reduce((groups, roll) => {
+         const grupos = rolls.reduce((groups, roll) => {
             const colorName = roll.attributes.color.data.attributes.name;
+            const colorCode = roll.attributes.color.data.attributes.code;
+            const colorHex = roll.attributes.color.data.attributes.color;
+         
             if (!groups[colorName]) {
-                groups[colorName] = [];
+                groups[colorName] = {
+                    name: colorName,
+                    code: colorCode,
+                    color: colorHex,
+                    rolls: []
+                };
             }
-            groups[colorName].push(roll);
+            groups[colorName].rolls.push(roll);
             return groups;
         }, {});
+        console.log(grupos);
+        return grupos;
     };
 
     return (
@@ -152,7 +161,6 @@ const FabricReport = ({ fabrics }) => {
                             </Text>
                         </View>
                         <View style={styles.headerRight}>
-                            <Text>Fecha: {new Date().toLocaleDateString()}</Text>
                             <Text>Total Colores: {fabric.attributes.colors.data.length}</Text>
                             <Text>Total Rollos: {fabric.attributes.rolls.data.length}</Text>
                         </View>
@@ -166,7 +174,7 @@ const FabricReport = ({ fabrics }) => {
                                 {fabric.attributes.fabric_images.data[0] && (
                                     <Image
                                         style={styles.image}
-                                        src={process.env.REACT_APP_BACKEND_URL + fabric.attributes.fabric_images.data[0].attributes.url}
+                                        src={'http://localhost:1337' + fabric.attributes.fabric_images.data[0].attributes.url}
                                     />
                                 )}
                             </View>
@@ -193,32 +201,45 @@ const FabricReport = ({ fabrics }) => {
                                 </View>
                             </View>
                         </View>
-
+                        <View style={styles.legend}>
+                            <View style={styles.legendItem}>
+                                <View style={[styles.legendBox, { backgroundColor: '#fff' }]} />
+                                <Text style={styles.legendText}>Disponible</Text>
+                            </View>
+                            <View style={styles.legendItem}>
+                                <View style={[styles.legendBox, { backgroundColor: '#ffccc7' }]} />
+                                <Text style={styles.legendText}>No Disponible</Text>
+                            </View>
+                            <View style={styles.legendItem}>
+                                <View style={[styles.legendBox, { backgroundColor: '#bae7ff' }]} />
+                                <Text style={styles.legendText}>En Tienda</Text>
+                            </View>
+                            <View style={styles.legendItem}>
+                                <View style={[styles.legendBox, { backgroundColor: '#ffffb8' }]} />
+                                <Text style={styles.legendText}>Reservado</Text>
+                            </View>
+                        </View>
                         <View style={styles.rollsContainer}>
-                            {Object.entries(groupRollsByColor(fabric.attributes.rolls.data)).map(([color, rolls]) => (
-                                <View key={color} style={styles.colorSection}>
+                             {Object.values(groupRollsByColor(fabric.attributes.rolls.data)).map((colorGroup) => (
+                                <View key={colorGroup.name} style={styles.colorSection}>
                                     <View style={styles.colorHeader}>
-                                        <Text>{color} - {rolls.length} rollos</Text>
+                                        <Text>{colorGroup.name} - {colorGroup.rolls.length} rollos</Text>
                                     </View>
                                     <View style={styles.rollsGrid}>
-                                        {rolls.map((roll) => (
+                                        {colorGroup.rolls.map((roll) => (
                                             <View 
                                                 key={roll.id} 
                                                 style={[
                                                     styles.rollBox,
-                                                    roll.attributes.status === 'NO_DISPONIBLE' && styles.rollBoxUnavailable,
-                                                    roll.attributes.status === 'EN_TIENDA' && styles.rollBoxStore,
+                                                    roll.attributes.status !== 'DISPONIBLE' && styles.rollBoxUnavailable,
+                                                    roll.attributes.status === 'EN TIENDA' && styles.rollBoxStore,
                                                     roll.attributes.status === 'RESERVADO' && styles.rollBoxReserved,
-                                                    { width: '10%', height: 'auto' }
+                                                    { width: '80px', height: 'auto', alignItems: 'center', justifyContent: 'center' }
                                                 ]}
                                             >
                                                 <Text style={{ fontSize: 10, color: 'gray' }}>{roll.attributes.code}</Text>
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold' }}>{roll.attributes.roll_footage} m</Text>
-                                                <Text style={[styles.statusIcon, { fontSize: 12 }]}>
-                                                    {roll.attributes.status === 'NO_DISPONIBLE' && '❌'}
-                                                    {roll.attributes.status === 'EN_TIENDA' && '🏪'}
-                                                    {roll.attributes.status === 'RESERVADO' && '🔒'}
-                                                </Text>
+                                               
                                             </View>
                                         ))}
                                     </View>
@@ -227,24 +248,7 @@ const FabricReport = ({ fabrics }) => {
                         </View>
                     </View>
 
-                    <View style={styles.legend}>
-                        <View style={styles.legendItem}>
-                            <View style={[styles.legendBox, { backgroundColor: '#fff' }]} />
-                            <Text style={styles.legendText}>Disponible</Text>
-                        </View>
-                        <View style={styles.legendItem}>
-                            <View style={[styles.legendBox, { backgroundColor: '#ffccc7' }]} />
-                            <Text style={styles.legendText}>No Disponible</Text>
-                        </View>
-                        <View style={styles.legendItem}>
-                            <View style={[styles.legendBox, { backgroundColor: '#bae7ff' }]} />
-                            <Text style={styles.legendText}>En Tienda</Text>
-                        </View>
-                        <View style={styles.legendItem}>
-                            <View style={[styles.legendBox, { backgroundColor: '#ffffb8' }]} />
-                            <Text style={styles.legendText}>Reservado</Text>
-                        </View>
-                    </View>
+                 
                 </Page>
             ))}
         </Document>
